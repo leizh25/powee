@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { VantResolver } from "@vant/auto-import-resolver";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -13,7 +15,11 @@ export default defineConfig({
         /\.vue\?vue/, // .vue
         /\.md$/, // .md
       ],
+      resolvers: [VantResolver()],
       dts: "src/auto-import.d.ts",
+    }),
+    Components({
+      resolvers: [VantResolver()],
     }),
   ],
 });

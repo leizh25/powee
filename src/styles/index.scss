@@ -1,0 +1,40 @@
+// 背景
+$color-main: #181818;
+// 前景
+$color: #fff;
+//前景-高亮
+$color-hl: #ee731c;
+
+// 前景色
+.font_color_style {
+  color: $color;
+}
+//高亮颜色
+.font_color_hl {
+  color: $color-hl;
+}
+//页面容器
+.page_container_style {
+  width: 100vw;
+  height: 100vh;
+  background-color: $color-main;
+}
+
+// 居中容器
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 左右居中
+.align_center {
+  display: flex;
+  justify-content: center;
+}
+
+// 内容盒子
+.content_box_style {
+  border-radius: 16rpx;
+  background: #26292d;
+}

@@ -1,0 +1,282 @@
+#dashboard_page {
+  //   background: linear-gradient(180deg, #181a1e 0%, #020202 100%);
+  .content_block {
+    padding: 28rpx 14rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // #region
+    //   设备名
+    .device_name {
+      width: 500rpx;
+      height: 64rpx;
+      line-height: 64rpx;
+      background-color: rgba($color: #596472, $alpha: 0.4);
+      border-radius: 40rpx 40rpx 40rpx 40rpx;
+      font-size: 28rpx;
+      text-align: center;
+      font-family: "PingFang SC-Medium", "PingFang SC";
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 11rpx;
+    }
+    //   剩余容量和时间
+    .remaining_container {
+      width: 100%;
+      padding: 0 38rpx;
+      box-sizing: border-box;
+      height: 80rpx;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 26rpx;
+      .remaining_box {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        .remaining_value_box {
+          margin-left: 10rpx;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .remaining_value {
+            font-family: "PingFang SC";
+            font-weight: 400;
+            font-size: 28rpx;
+            color: #ee731c;
+          }
+          .remaining_type {
+            font-family: "PingFang SC";
+            font-weight: 400;
+            font-size: 24rpx;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    // #endregion
+    // SOC展示
+    .soc_container {
+      width: 100%;
+      height: 530rpx;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 2rpx solid #272a2f;
+      .canvas_container {
+        width: 100%;
+        height: 360rpx;
+        display: flex;
+        justify-content: center;
+        .canvas_box {
+          position: relative;
+          &::after {
+            // content: "";
+            // position: absolute;
+            // left: -50%;
+            // top: 0;
+            // // z-index: 1;
+            // width: 100%;
+            // height: 100%;
+            // border-radius: 50%;
+            // background: radial-gradient(circle at 40% 50%, #485057b6 5%, transparent 80%);
+            // box-shadow: inset 0 0 50rpx 10rpx #181818;
+          }
+        }
+      }
+      .switchs_status_container {
+        flex: 1;
+        padding: 22rpx 80rpx;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        .status_box {
+          height: 50rpx;
+          line-height: 50rpx;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+
+          &:nth-child(2),
+          &:nth-child(4) {
+            grid-template-columns: 2fr 1fr;
+          }
+
+          .status_name {
+            text-align: right;
+            font-family: "PingFang SC";
+            font-weight: 400;
+            font-size: 28rpx;
+            color: #9ca1a3;
+          }
+          .status_value {
+            padding-left: 12rpx;
+            font-family: "PingFang SC";
+            font-weight: 400;
+            font-size: 28rpx;
+            color: #ffffff;
+            &.active {
+              color: #ee731c;
+            }
+          }
+        }
+      }
+    }
+    // 数据展示列
+    .data_column_container {
+      width: 100%;
+      margin-top: 26rpx;
+      margin-bottom: 22rpx;
+      height: 100rpx;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      .data_column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-right: 2rpx solid #272a2f;
+        box-sizing: border-box;
+        &:last-child {
+          border-right: none;
+        }
+        .data_value {
+          font-family: "PingFang SC";
+          font-weight: 400;
+          font-size: 32rpx;
+          color: #ffffff;
+          margin-bottom: 10rpx;
+        }
+        .data_key {
+          font-family: PingFang SC;
+          font-weight: 400;
+          font-size: 22rpx;
+          color: #9ca1a3;
+        }
+      }
+    }
+    // 数据展示表格
+    .data_table_container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 28rpx;
+      .data_box {
+        height: 180rpx;
+        padding: 28rpx 24rpx;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        .icon_box {
+          margin-bottom: 6px;
+        }
+        .value {
+          font-family: "PingFang SC";
+          font-weight: 400;
+          font-size: 32rpx;
+          color: #ee731c;
+          margin-bottom: 10rpx;
+        }
+        .name {
+          font-family: "PingFang SC";
+          font-weight: 400;
+          font-size: 24rpx;
+          color: #9ca1a3;
+        }
+      }
+    }
+    // 温度
+    .temp_container {
+      .temp_box {
+        height: 178rpx;
+        display: flex;
+        flex-direction: column;
+        .row {
+          flex: 1;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .name {
+            font-family: "PingFang SC";
+            font-weight: 400;
+            font-size: 30rpx;
+            color: #ffffff;
+            line-height: 50rpx;
+          }
+          .value {
+            font-family: PingFang SC;
+            font-weight: 400;
+            font-size: 34rpx;
+            color: #ee731c;
+          }
+        }
+      }
+    }
+    // 单体电压
+    .cell_voltage_container {
+      width: 100%;
+      .cells_container {
+        width: 100%;
+        padding: 40rpx 0;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        .place_block {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .ccell_box {
+            width: 128rpx;
+            height: 120rpx;
+            // outline: 1px rgb(255, 25, 0) dashed;
+            margin-top: 10rpx;
+            .icon_bg {
+              width: 100%;
+              height: 70rpx;
+              background-image: url("/static/icons/battery_empty@2x.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              position: relative;
+              display: flex;
+              align-items: center;
+              .color_fill {
+                // position: absolute;
+                width: 100rpx;
+                height: 46rpx;
+                margin-left: 11rpx;
+                background-color: #ee731c;
+              }
+              .cell_no {
+                position: absolute;
+                left: 0;
+                top: 0;
+                line-height: 70rpx;
+                padding-left: 20rpx;
+                box-sizing: border-box;
+                font-family: "PingFang SC";
+                font-weight: 400;
+                font-size: 20rpx;
+                color: #ffffff;
+              }
+            }
+            .value {
+              height: 50rpx;
+              line-height: 50rpx;
+              text-align: center;
+              font-family: "PingFang SC";
+              font-weight: 400;
+              font-size: 26rpx;
+              color: #ee731c;
+            }
+          }
+        }
+      }
+    }
+  }
+}
