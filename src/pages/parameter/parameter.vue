@@ -3,56 +3,124 @@
     <scroll-view scroll-y style="height: 100%" :show-scrollbar="false">
       <view class="content_block">
         <view class="name_container content_box_style">
-          <view class="param_title">Bluetooth name</view>
-          <view class="ble_name">JL-12100-16800001</view>
+          <view class="param_title">{{ $t("param.name") }}</view>
+          <view class="ble_name">{{ bt.connectedDevice.value?.localName }}</view>
           <view class="set_box">
-            <input class="input" />
-            <button class="set_btn">SET</button>
+            <input class="input" v-model="newName" />
+            <button class="set_btn" @click="setName">SET</button>
           </view>
         </view>
         <view class="info_container content_box_style">
           <view class="param_box">
-            <view class="param_title">Bar code</view>
-            <view class="param_value">JL-12100-16800001</view>
+            <view class="param_title">{{ $t("param.bar_code") }}</view>
+            <view class="param_value">{{ bt.barCode.value }}</view>
+          </view>
+          <view class="param_box" v-show="bt.isNewVersion.value">
+            <view class="param_title">{{ $t("param.device_model") }}</view>
+            <view class="param_value">{{ bt.batteryModel.value }}</view>
           </view>
           <view class="param_box">
-            <view class="param_title">Device model</view>
-            <view class="param_value">SP14S004P14S50A</view>
+            <view class="param_title">{{ $t("param.manufacturer") }}</view>
+            <view class="param_value">{{ bt.manufacturer.value }}</view>
           </view>
           <view class="param_box">
-            <view class="param_title">Manufacturer</view>
-            <view class="param_value">DGJBD</view>
+            <view class="param_title">{{ $t("param.version") }}</view>
+            <view class="param_value">{{ bt.softwareVersion.value }}</view>
+          </view>
+          <view class="param_box" v-show="bt.isNewVersion.value">
+            <view class="param_title">{{ $t("param.bms_model") }}</view>
+            <view class="param_value">{{ bt.BMSModel.value }}</view>
           </view>
           <view class="param_box">
-            <view class="param_title">Version</view>
-            <view class="param_value">2.9</view>
-          </view>
-          <view class="param_box">
-            <view class="param_title">BMS Model</view>
-            <view class="param_value">SP14S004 V1.0</view>
-          </view>
-          <view class="param_box">
-            <view class="param_title">Production date</view>
-            <view class="param_value">2024-02-221</view>
-          </view>
-          <view class="param_box">
-            <view class="param_title">BMS ID</view>
-            <view class="param_value">000000000000000000000000</view>
+            <view class="param_title">{{ $t("param.pro_date") }}</view>
+            <view class="param_value">{{ bt.productionDate.value }}</view>
           </view>
         </view>
       </view>
     </scroll-view>
+    <Toast></Toast>
   </view>
 </template>
 <script lang="ts" setup>
+import Bluetooth from "@/utils/Ble";
+import i18n from "@/locale";
+const { t: $t } = i18n.global;
+const bt = new Bluetooth();
+const newName = ref("");
+let getDataTimer = 0;
+let stopGetDataTimer = 0;
 onNavigationBarButtonTap((opt) => {
   if (opt.index == 0) {
     // 列表按钮
     uni.navigateTo({
-      url: "/pages/device/device",
+      url: "/pages/device/device?page=parameter",
     });
   }
 });
+onLoad(() => {});
+onShow(() => {
+  bt.isGotBarCode.value = false;
+  bt.isGotManufacturer.value = false;
+  if (!bt.isConnected.value) return;
+  let getDeviceModelTimes = 0;
+  getDataTimer = setInterval(() => {
+    if (!bt.isEnterFactory.value && !bt.isNewVersion.value) {
+      Bluetooth.enterFactoryMode();
+      return;
+    }
+    if (!bt.isGotBarCode.value) {
+      Bluetooth.writeGetBarCodeCmd();
+      return;
+    }
+    if (!bt.isGotManufacturer.value) {
+      Bluetooth.writeGetManufacturerInfoCmd();
+      return;
+    }
+    if (bt.isNewVersion.value) {
+      if (!bt.isGotBatteryModel.value) {
+        if (getDeviceModelTimes++ >= 5) return (bt.isGotBatteryModel.value = true);
+        Bluetooth.writeGetBatteryModelCmd();
+      }
+      if (!bt.isGotBMSModel.value) {
+        Bluetooth.writeGetBMSModelCmd();
+        return;
+      }
+    }
+    if (bt.isEnterFactory.value && !bt.isNewVersion.value) {
+      Bluetooth.exitFactoryMode();
+    }
+    clearInterval(getDataTimer);
+  }, 300);
+  stopGetDataTimer = setTimeout(() => {
+    clearInterval(getDataTimer);
+    clearTimeout(stopGetDataTimer);
+  }, 10000);
+});
+onHide(() => {
+  clearInterval(getDataTimer);
+  clearTimeout(stopGetDataTimer);
+});
+
+const setName = () => {
+  if (!newName.value.trim()) {
+    return uni.$emit("toast", { msg: $t("param.required_name") });
+  } else if (newName.value.trim().length > 22) {
+    uni.$emit("toast", { msg: $t("param.name_too_long") });
+  }
+  bt.setNameSuccess.value = false;
+  Bluetooth.SetName(newName.value.trim());
+};
+watch(
+  () => bt.setNameSuccess.value,
+  (val) => {
+    if (val) {
+      console.log("设置名称成功: ", val);
+      uni.$emit("toast", { msg: $t("param.set_name_success") });
+      bt.connectedDevice.value!.localName = newName.value;
+      newName.value = "";
+    }
+  },
+);
 </script>
 <style lang="scss">
 @mixin param_title {
@@ -122,7 +190,6 @@ onNavigationBarButtonTap((opt) => {
       }
     }
     .info_container {
-      height: 754rpx;
       padding: 0 32rpx;
       padding-top: 10rpx;
       box-sizing: border-box;

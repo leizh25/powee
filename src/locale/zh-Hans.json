@@ -1,0 +1,68 @@
+{
+  "loading": {
+    "text": "加载中"
+  },
+  "control": {
+    "tab": "控制",
+    "chargeSwitch": "充电开关",
+    "disChargeSwitch": "放电开关"
+  },
+  "dashboard": {
+    "nominal": "标称容量",
+    "est_c_time": "剩余充电时间",
+    "est_d_time": "剩余放电时间",
+    "soc": "SOC",
+    "chg_mos": "充电开关",
+    "dis_mos": "放电开关",
+    "balance": "均衡状态",
+    "protection": "保护状态",
+    "on": "开",
+    "off": "关",
+    "remaining_capacity": "剩余容量",
+    "total_voltage": "总电压",
+    "current": "电流",
+    "max_voltage": "最高电压",
+    "min_voltage": "最低电压",
+    "power": "功率",
+    "averageVoltage": "平均功率",
+    "voltageDifference": "压差",
+    "loopCount": "循环次数",
+    "temperature": "温度",
+    "cellVoltage": "单体电压",
+    "cell": "Cell",
+    "bat": "电池",
+    "bms": "BMS",
+    "nodevice": "暂无连接设备",
+    "getDataFail": "获取数据失败"
+  },
+  "device": {
+    "input": "请输入名称",
+    "Strong": "强",
+    "Medium": "中",
+    "Weak": "弱",
+    "no_device": "暂无设备",
+    "refresh": "刷新",
+    "refreshing": "刷新中",
+    "con_succ": "连接成功",
+    "con_fail": "连接失败"
+  },
+  "mine": {
+    "version": "版本"
+  },
+  "param": {
+    "name": "蓝牙名称",
+    "bar_code": "条码",
+    "device_model": "设备型号",
+    "manufacturer": "生产厂商",
+    "version": "软件版本",
+    "bms_model": "BMS型号",
+    "pro_date": "生产日期",
+    "required_name": "名字不能为空",
+    "name_too_long": "名字超出22字符",
+    "set_name_success": "设置名字成功"
+  },
+  "tabbar.dashboard": "Dashboard",
+  "tabbar.control": "Control",
+  "tabbar.param": "Parameter",
+  "tabbar.mine": "Mine"
+}

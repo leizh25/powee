@@ -1,24 +1,25 @@
 <template>
   <view id="device_page" class="page_container_style">
-    <view v-if="true">
+    <view v-if="bt.deviceList.value.length">
       <view class="inp_container">
         <view class="icon_container" @click="showLoading">
           <IconBox name="search" width="40rpx"></IconBox>
         </view>
-        <input type="text" class="input" placeholder="Please Input Filter Name" />
+        <input type="text" class="input" v-model="searchText" :placeholder="$t('device.input')" />
       </view>
       <view class="device_conatiner">
         <scroll-view scroll-y class="scroll_view" style="" :show-scrollbar="false">
-          <view class="device_box content_box_style" v-for="i in 10" :key="i">
+          <view class="device_box content_box_style" v-for="device in showDeviceList" :key="device.deviceId">
             <view class="left">
-              <view class="name">JL-12100-16800001</view>
+              <view class="name">{{ device.localName }}</view>
               <view class="desc">
-                <view class="mac">A4:C1:37:10:31:08</view>
-                <view class="rssi">RSS1:-43db Strong</view>
+                <view class="mac">{{ device.deviceId }}</view>
+                &nbsp;&nbsp;
+                <view class="rssi">RSSI:{{ device.RSSI }}db&nbsp;&nbsp;{{ $t(`device.${device.signalLevel}`) }}</view>
               </view>
             </view>
             <view class="right">
-              <IconBox :name="`${i % 2 === 0 ? 'disConnect' : 'connect'}`" width="48rpx"></IconBox>
+              <IconBox :name="`${device.isConnected === true ? 'disConnect' : 'connect'}`" width="48rpx" @click="connect(device)"></IconBox>
             </view>
           </view>
         </scroll-view>
@@ -29,32 +30,135 @@
         <view class="img_box">
           <IconBox name="no_device" width="420rpx" height="395rpx"></IconBox>
         </view>
-        <view class="text">No devices</view>
+        <view class="text">{{ $t("device.no_device") }}</view>
         <view class="btn_box">
-          <button class="btn">Refresh</button>
+          <button class="btn" @click="refresh">{{ $t("device.refresh") }}</button>
         </view>
       </view>
     </view>
   </view>
   <Loading :is-show="isShowLoading"></Loading>
+  <Toast></Toast>
 </template>
 <script lang="ts" setup>
+import type { BluetoothDeviceInfo } from "@/types";
+import Bluetooth from "@/utils/Ble.ts";
+import i18n from "@/locale";
+const { t: $t } = i18n.global;
 const isShowLoading = ref(false);
 const showLoading = () => (isShowLoading.value = !isShowLoading.value);
-
+const bt = new Bluetooth();
+const searchText = ref("");
+const showDeviceList = ref<BluetoothDeviceInfo[]>([]);
+let isConnectting = false;
+let page = "";
 onNavigationBarButtonTap((opt) => {
   if (opt.index === 0) {
     // 刷新按钮
-    isShowLoading.value = false;
-    console.log("刷新");
+    refresh();
+  } else if (opt.index === 1) {
+    console.log("返回按钮");
+    if (isShowLoading.value) return;
+    uni.switchTab({
+      url: `/pages/${page ? page + "/" + page : "dashboard/dashboard"}`,
+    });
   }
 });
 onBackPress((opt) => {
-  if (opt.from === "backbutton" && isShowLoading.value) {
+  if (isShowLoading.value) {
     console.log("禁止返回");
     return true;
   }
 });
+onLoad((e) => {
+  showDeviceList.value = bt.deviceList.value;
+  page = e?.page;
+  if (!page) {
+    isShowLoading.value = true;
+    Bluetooth.init();
+    delayToStop();
+  }
+});
+onShow(() => {});
+onHide(() => {
+  Bluetooth.stopBluetoothDevicesDiscovery();
+});
+onUnload(() => {
+  isShowLoading.value = false;
+  Bluetooth.stopBluetoothDevicesDiscovery();
+});
+watchEffect(() => {
+  const text = searchText.value.trim();
+  if (text) {
+    showDeviceList.value = bt.deviceList.value.filter((device) => {
+      return device.localName.toUpperCase().includes(text.toUpperCase());
+    });
+  } else {
+    showDeviceList.value = bt.deviceList.value;
+  }
+});
+watch(
+  () => Bluetooth.canAutoConnect.value,
+  (val) => {
+    if (val && !isConnectting) {
+      console.log("val: ", val);
+      console.log("Bluetooth.lastConnectedDevice: ", Bluetooth.lastConnectedDevice);
+      connect(Bluetooth.lastConnectedDevice!, false);
+    }
+  },
+  {
+    once: true,
+  },
+);
+const refresh = () => {
+  uni.$emit("toast", { msg: $t("device.refresh") });
+  console.log("刷新");
+  bt.deviceList.value = [];
+  bt.connectedDevice.value && bt.deviceList.value.push(bt.connectedDevice.value);
+  showDeviceList.value = [];
+  Bluetooth.init();
+  delayToStop();
+};
+const connect = (device: BluetoothDeviceInfo, isCheckConnected: boolean = true) => {
+  console.log("点击device: ", device);
+  if (isCheckConnected) {
+    if (device.isConnected) {
+      Bluetooth.unLink(device);
+      Bluetooth.clearPropeerties();
+      return;
+    }
+  }
+  isShowLoading.value = true;
+  isConnectting = true;
+  Bluetooth.connect(device)
+    .then((device: BluetoothDeviceInfo) => Bluetooth.getServices(device))
+    .then(({ services, device }) => Bluetooth.getCharacteristics(services, device))
+    .then(() => {
+      console.log("√连接成功: ", device);
+      uni.$emit("toast", { msg: $t("device.con_succ") });
+      Bluetooth.clearPropeerties();
+      Bluetooth.listeningData();
+      uni.switchTab({
+        url: `/pages/dashboard/dashboard`,
+      });
+    })
+    .catch((err) => {
+      const msg = Bluetooth.getBleErrorMsg(err, true);
+      console.log("连接失败: ", msg);
+      isShowLoading.value = false;
+      uni.$emit("toast", { msg: $t("device.con_fail") });
+    })
+    .finally(() => {
+      isShowLoading.value = false;
+      isConnectting = false;
+    });
+};
+const delayToStop = () => {
+  setTimeout(() => {
+    !isConnectting && (isShowLoading.value = false);
+    Bluetooth.stopBluetoothDevicesDiscovery();
+  }, 5000);
+};
 </script>
 <style lang="scss">
 #device_page {

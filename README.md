@@ -1,16 +1,33 @@
-# uni-app vue3+ts模板
+# POWEE UniAPP
 
-## 技术
-- vue3
-- typescript
-- auto-import
-- pinia
-- husky
-- prettier
-- commitlint
-- lint-staged
+## 应用信息
 
-## 环境
-- node 18
-- npm 10
+- 名称
+
+```
+ POWEE
+```
+
+- 包名:
+
+```
+com.jbd.powee
+```
+
+- uniapp 应用标识:
+
+```
+__UNI__52694BC
+```
+
+- 离线打包APP Key:
+
+```
+bec723214cc3f203562eaf89effcf12f
+```
+
+# 开发环境
+
+- nodejs 18
 - pnpm 8
+- uniapp 基座 4.07

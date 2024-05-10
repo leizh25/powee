@@ -13,7 +13,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TitleBoard: typeof import('./src/components/TitleBoard/index.vue')['default']
-    VanCircle: typeof import('vant/es')['Circle']
+    Toast: typeof import('./src/components/Toast/index.vue')['default']
     VanSwitch: typeof import('vant/es')['Switch']
   }
 }

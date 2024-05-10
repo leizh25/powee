@@ -2,7 +2,7 @@
   <view id="mine_page" class="page_container_style">
     <view class="icon_container">
       <IconBox name="app_icon" width="200rpx" class="app_icon_box"></IconBox>
-      <view class="version font_color_style">Version:1.0</view>
+      <view class="version font_color_style">{{ $t("mine.version") }}:1.0</view>
     </view>
     <view class="info_container">
       <view class="info_box content_box_style" @click="webHandle">
@@ -22,20 +22,25 @@
 </template>
 <script lang="ts" setup>
 const callHandle = () => {
-  uni.makePhoneCall({
-    phoneNumber: "0610086824",
-  });
+  // uni.makePhoneCall({
+  //   phoneNumber: "0610086824",
+  // });
 };
 const emailHandle = () => {
-  uni.setClipboardData({
-    data: "contact@powee.fr",
-    success: () => {
-      uni.showToast({
-        title: "cpoied",
-        icon: "none",
+  plus.runtime.openURL(
+    "mailto:contact@powee.fr",
+    (e) => {
+      console.log("打开失败");
+      console.log(e);
+      uni.setClipboardData({
+        data: "contact@powee.fr",
+        success: () => {
+          uni.hideToast();
+        },
       });
     },
-  });
+    "com.android.email",
+  );
 };
 const webHandle = () => {
   plus.runtime.openURL("https://www.powee.fr");
@@ -44,7 +49,7 @@ onNavigationBarButtonTap((opt) => {
   if (opt.index == 0) {
     // 列表按钮
     uni.navigateTo({
-      url: "/pages/device/device",
+      url: "/pages/device/device?page=mine",
     });
   }
 });

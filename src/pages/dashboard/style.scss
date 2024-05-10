@@ -10,8 +10,8 @@
     // #region
     //   设备名
     .device_name {
-      width: 500rpx;
       height: 64rpx;
+      padding: 0 30rpx;
       line-height: 64rpx;
       background-color: rgba($color: #596472, $alpha: 0.4);
       border-radius: 40rpx 40rpx 40rpx 40rpx;
@@ -29,14 +29,13 @@
       box-sizing: border-box;
       height: 80rpx;
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 26rpx;
+      justify-content: flex-end;
+      margin-bottom: 15rpx;
       .remaining_box {
         flex: 1;
         height: 100%;
         display: flex;
         align-items: center;
-
         .remaining_value_box {
           margin-left: 10rpx;
           display: flex;
@@ -64,7 +63,7 @@
       height: 530rpx;
       display: flex;
       flex-direction: column;
-      border-bottom: 2rpx solid #272a2f;
+      border-bottom: 2rpx solid #3a3f47;
       .canvas_container {
         width: 100%;
         height: 360rpx;
@@ -72,23 +71,42 @@
         justify-content: center;
         .canvas_box {
           position: relative;
-          &::after {
-            // content: "";
-            // position: absolute;
-            // left: -50%;
-            // top: 0;
-            // // z-index: 1;
-            // width: 100%;
-            // height: 100%;
-            // border-radius: 50%;
-            // background: radial-gradient(circle at 40% 50%, #485057b6 5%, transparent 80%);
-            // box-shadow: inset 0 0 50rpx 10rpx #181818;
+          .desc_box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            .soc_txt {
+              font-family: "PingFang SC";
+              font-weight: 400;
+              font-size: 30rpx;
+            }
+            .value {
+              font-family: "PingFang SC";
+              font-weight: 400;
+              font-size: 110rpx;
+              transform: translateX(20rpx);
+              .text {
+                margin-left: 10rpx;
+                font-family: "PingFang SC";
+                font-weight: 400;
+                font-size: 32rpx;
+              }
+            }
+          }
+          .circle_box {
+            // background-color: #fff;
+            // transform: rotate(90deg);
           }
         }
       }
       .switchs_status_container {
         flex: 1;
-        padding: 22rpx 80rpx;
+        padding: 22rpx 60rpx;
         box-sizing: border-box;
         display: grid;
         grid-template-rows: 1fr 1fr;
@@ -138,7 +156,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
-        border-right: 2rpx solid #272a2f;
+        border-right: 2rpx solid #3a3f47;
         box-sizing: border-box;
         &:last-child {
           border-right: none;
@@ -167,7 +185,7 @@
       gap: 28rpx;
       .data_box {
         height: 180rpx;
-        padding: 28rpx 24rpx;
+        padding: 20rpx 24rpx;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -194,6 +212,8 @@
     .temp_container {
       .temp_box {
         height: 178rpx;
+        border-top: 2rpx solid #3a3d43;
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         .row {
@@ -224,6 +244,7 @@
       .cells_container {
         width: 100%;
         padding: 40rpx 0;
+        border-top: 2rpx solid #3a3d43;
         box-sizing: border-box;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -248,6 +269,7 @@
               .color_fill {
                 // position: absolute;
                 width: 100rpx;
+                max-width: 100rpx;
                 height: 46rpx;
                 margin-left: 11rpx;
                 background-color: #ee731c;

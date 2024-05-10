@@ -2,7 +2,7 @@
   <view id="loading_container" v-show="isShow">
     <view class="loading_box">
       <IconBox name="loading" width="100rpx" class="icon_box"></IconBox>
-      <view class="text">Loading</view>
+      <view class="text">{{ $t("loading.text") }}</view>
     </view>
   </view>
 </template>

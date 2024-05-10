@@ -1,0 +1,67 @@
+{
+  "loading": {
+    "text": "Loading"
+  },
+  "control": {
+    "chargeSwitch": "Charge Switch",
+    "disChargeSwitch": "DisCharge Switch"
+  },
+  "dashboard": {
+    "nominal": "Nominal Capacity",
+    "est_c_time": "Estimate Charge Time",
+    "est_d_time": "Estimate Discharge Time",
+    "soc": "SOC",
+    "chg_mos": "ChgMos",
+    "dis_mos": "DisMos",
+    "balance": "Balance",
+    "protection": "Protection",
+    "on": "ON",
+    "off": "OFF",
+    "remaining_capacity": "Remaining Capacity",
+    "total_voltage": "Total Voltage",
+    "current": "Electric",
+    "max_voltage": "Max Voltage",
+    "min_voltage": "Min Voltage",
+    "power": "Power",
+    "averageVoltage": "Ave Voltage",
+    "voltageDifference": "PressureDiff",
+    "loopCount": "Cycle-Index",
+    "temperature": "Temperature",
+    "cellVoltage": "Cell Voltage",
+    "cell": "Cell",
+    "bat": "BAT",
+    "bms": "BMS",
+    "nodevice": "no device connected",
+    "getDataFail": "failed to get data"
+  },
+  "device": {
+    "input": "Please Input Filter Name",
+    "Strong": "Strong",
+    "Medium": "Medium",
+    "Weak": "Weak",
+    "no_device": "No Device",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing",
+    "con_succ": "Connection Successful",
+    "con_fail": "Connection Failure"
+  },
+  "mine": {
+    "version": "Version"
+  },
+  "param": {
+    "name": "Bluetooth Name",
+    "bar_code": "Bar Code",
+    "device_model": "Device Model",
+    "manufacturer": "Manufacturer",
+    "version": "Software Version",
+    "bms_model": "BMS Model",
+    "pro_date": "Production Date",
+    "required_name": "Name is required",
+    "name_too_long": "The name exceed 22 characters",
+    "set_name_success": "set name success"
+  },
+  "tabbar.dashboard": "Dashboard",
+  "tabbar.control": "Control",
+  "tabbar.param": "Parameter",
+  "tabbar.mine": "Mine"
+}

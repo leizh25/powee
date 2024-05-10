@@ -1,0 +1,67 @@
+{
+  "loading": {
+    "text": "Chargement"
+  },
+  "control": {
+    "chargeSwitch": "Interrupteur de contrôle",
+    "disChargeSwitch": "Interrupteur de décharge"
+  },
+  "dashboard": {
+    "nominal": "Capacité nominale",
+    "est_c_time": "Temps restant estimé",
+    "est_d_time": "Temps restant estimé",
+    "soc": "SOC",
+    "chg_mos": "ChgMos",
+    "dis_mos": "DisMos",
+    "balance": "Équilibrage",
+    "protection": "Protection",
+    "on": "Activé",
+    "off": "Désactivé",
+    "remaining_capacity": "Capacité restante",
+    "total_voltage": "Tension totale",
+    "current": "Électrique",
+    "max_voltage": "Tension maximale",
+    "min_voltage": "Tension minimale",
+    "power": "Puissance",
+    "averageVoltage": "Tension moyenne",
+    "voltageDifference": "Différence de pression",
+    "loopCount": "Index de cycle",
+    "temperature": "Température",
+    "cellVoltage": "Tension de la cellule",
+    "cell": "Cellule",
+    "bat": "Batterie",
+    "bms": "Système de gestion de la batterie (BMS)",
+    "nodevice": "Aucun appareil",
+    "getDataFail": "failed to get data"
+  },
+  "device": {
+    "input": "Veuillez entrer le nom du filtre",
+    "Strong": "Fort",
+    "Medium": "Moyen",
+    "Weak": "Faible",
+    "no_device": "Aucun appareil",
+    "refresh": "Actualiser",
+    "refreshing": "Actualiser",
+    "con_succ": "Connexion réussie",
+    "con_fail": "Échec de la connexion"
+  },
+  "mine": {
+    "version": "Version"
+  },
+  "param": {
+    "name": "Nom Bluetooth",
+    "bar_code": "Code-barres",
+    "device_model": "Modèle d'appareil",
+    "manufacturer": "Fabricant",
+    "version": "Version du logiciel",
+    "bms_model": "Modèle de BMS",
+    "pro_date": "Date de production",
+    "required_name": "Le nom ne peut pas être vide",
+    "name_too_long": "Le nom est plus long que 22 caractères",
+    "set_name_success": "Opération réussie"
+  },
+  "tabbar.dashboard": "Tableau de bord",
+  "tabbar.control": "Contrôle",
+  "tabbar.param": "Paramètre",
+  "tabbar.mine": "Mien"
+}
